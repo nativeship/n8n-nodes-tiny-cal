@@ -1,0 +1,1812 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    {
+      "operationId": "get-account",
+      "method": "GET",
+      "path": "/me",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": []
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "currency_symbol",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "type": "string"
+          },
+          {
+            "name": "lifetime_pro_at",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "profile_picture_url",
+            "type": "string"
+          },
+          {
+            "name": "vanity_path",
+            "type": "string"
+          }
+        ],
+        "simplifiedFields": [
+          "currency_symbol",
+          "email",
+          "language",
+          "lifetime_pro_at",
+          "name",
+          "profile_picture_url",
+          "vanity_path"
+        ]
+      },
+      "errors": [],
+      "requestPlan": {
+        "operationId": "get-account",
+        "method": "GET",
+        "path": "/me",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "GET",
+          "url": "=/me",
+          "query": [],
+          "body": [],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "currency_symbol",
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "name": "language",
+              "type": "string"
+            },
+            {
+              "name": "lifetime_pro_at",
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "profile_picture_url",
+              "type": "string"
+            },
+            {
+              "name": "vanity_path",
+              "type": "string"
+            }
+          ],
+          "simplifiedFields": [
+            "currency_symbol",
+            "email",
+            "language",
+            "lifetime_pro_at",
+            "name",
+            "profile_picture_url",
+            "vanity_path"
+          ]
+        },
+        "errors": [],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "create-booking",
+      "method": "POST",
+      "path": "/booking-types/{bookingType}/bookings",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [
+        {
+          "name": "bookingType",
+          "inputName": "bookingType",
+          "sample": 2,
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": [
+          {
+            "name": "booking_questions",
+            "inputName": "booking_questions",
+            "sample": [
+              {}
+            ],
+            "type": "array",
+            "required": false
+          },
+          {
+            "name": "bookings",
+            "inputName": "bookings",
+            "sample": [
+              {
+                "starts_at": "2024-03-20T10:00:00Z"
+              },
+              {
+                "starts_at": "2024-03-27T10:00:00Z"
+              }
+            ],
+            "example": [
+              {
+                "starts_at": "2024-03-20T10:00:00Z"
+              },
+              {
+                "starts_at": "2024-03-27T10:00:00Z"
+              }
+            ],
+            "type": "array",
+            "required": false
+          },
+          {
+            "name": "email",
+            "inputName": "email",
+            "sample": "john@example.com",
+            "example": "john@example.com",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "inputName": "name",
+            "sample": "John Doe",
+            "example": "John Doe",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "starts_at",
+            "inputName": "starts_at",
+            "sample": "2024-03-20T10:00:00Z",
+            "example": "2024-03-20T10:00:00Z",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "timezone",
+            "inputName": "timezone",
+            "sample": "America/Los_Angeles",
+            "example": "America/Los_Angeles",
+            "type": "string",
+            "required": true
+          }
+        ]
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "data",
+            "type": "alternative"
+          }
+        ],
+        "simplifiedFields": [
+          "data"
+        ]
+      },
+      "errors": [
+        {
+          "status": "403",
+          "title": "Forbidden - User does not have permission to create bookings for this booking type"
+        },
+        {
+          "status": "409",
+          "title": "Conflict for unavailable slots, non-cancelled duplicates (same email, type, and slot; 5 minutes), or lock timeouts. Available-seat group types (max_bookings > 1, excluding polls and round-robin) use the lock wait (10 seconds default); subscription-credit bookings keep 5 minutes. Lock timeouts are retryable."
+        },
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "create-booking",
+        "method": "POST",
+        "path": "/booking-types/{bookingType}/bookings",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "POST",
+          "url": "=/booking-types/{{$parameter[\"bookingType\"]}}/bookings",
+          "query": [],
+          "body": [
+            {
+              "name": "booking_questions",
+              "source": "additionalFields"
+            },
+            {
+              "name": "bookings",
+              "source": "additionalFields"
+            },
+            {
+              "name": "email",
+              "source": "parameter"
+            },
+            {
+              "name": "name",
+              "source": "parameter"
+            },
+            {
+              "name": "starts_at",
+              "source": "additionalFields"
+            },
+            {
+              "name": "timezone",
+              "source": "parameter"
+            }
+          ],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "data",
+              "type": "alternative"
+            }
+          ],
+          "simplifiedFields": [
+            "data"
+          ]
+        },
+        "errors": [
+          {
+            "status": "403",
+            "title": "Forbidden - User does not have permission to create bookings for this booking type"
+          },
+          {
+            "status": "409",
+            "title": "Conflict for unavailable slots, non-cancelled duplicates (same email, type, and slot; 5 minutes), or lock timeouts. Available-seat group types (max_bookings > 1, excluding polls and round-robin) use the lock wait (10 seconds default); subscription-credit bookings keep 5 minutes. Lock timeouts are retryable."
+          },
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": [
+          "advanced parameter booking_questions",
+          "advanced parameter bookings"
+        ]
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "create-booking-type",
+      "method": "POST",
+      "path": "/booking-types",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": [
+          {
+            "name": "approval_required",
+            "inputName": "approval_required",
+            "sample": false,
+            "example": false,
+            "type": "boolean",
+            "required": false
+          },
+          {
+            "name": "booking_availability_interval_minutes",
+            "inputName": "booking_availability_interval_minutes",
+            "sample": 30,
+            "default": 15,
+            "example": 30,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "booking_threshold",
+            "inputName": "booking_threshold",
+            "sample": 120,
+            "example": 120,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "booking_type_category_id",
+            "inputName": "booking_type_category_id",
+            "sample": 1,
+            "example": 1,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "currency_code",
+            "inputName": "currency_code",
+            "sample": "USD",
+            "example": "USD",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "description",
+            "inputName": "description",
+            "sample": "Book a 30 minute meeting with me",
+            "example": "Book a 30 minute meeting with me",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "display_seats_remaining",
+            "inputName": "display_seats_remaining",
+            "sample": false,
+            "default": false,
+            "example": false,
+            "type": "boolean",
+            "required": false
+          },
+          {
+            "name": "duration_minutes",
+            "inputName": "duration_minutes",
+            "sample": 30,
+            "example": 30,
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "latest_availability_days",
+            "inputName": "latest_availability_days",
+            "sample": 90,
+            "default": 60,
+            "example": 90,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "max_bookings",
+            "inputName": "max_bookings",
+            "sample": 1,
+            "default": 1,
+            "example": 1,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "max_guest_invites_per_booker",
+            "inputName": "max_guest_invites_per_booker",
+            "sample": 0,
+            "default": 0,
+            "example": 0,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "padding_minutes",
+            "inputName": "padding_minutes",
+            "sample": 15,
+            "default": 0,
+            "example": 15,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "payment_platform",
+            "inputName": "payment_platform",
+            "sample": "stripe",
+            "example": "stripe",
+            "enum": [
+              "stripe",
+              "paypal",
+              "tidycal"
+            ],
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "price",
+            "inputName": "price",
+            "sample": 25,
+            "default": 0,
+            "example": 25,
+            "type": "number",
+            "required": false
+          },
+          {
+            "name": "private",
+            "inputName": "private",
+            "sample": false,
+            "default": false,
+            "example": false,
+            "type": "boolean",
+            "required": false
+          },
+          {
+            "name": "redirect_url",
+            "inputName": "redirect_url",
+            "sample": "https://example.com/thank-you",
+            "example": "https://example.com/thank-you",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "title",
+            "inputName": "title",
+            "sample": "30 Minute Meeting",
+            "example": "30 Minute Meeting",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "url_slug",
+            "inputName": "url_slug",
+            "sample": "30-minute-meeting",
+            "example": "30-minute-meeting",
+            "type": "string",
+            "required": true
+          }
+        ]
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "data",
+            "type": "object"
+          }
+        ],
+        "simplifiedFields": [
+          "data"
+        ]
+      },
+      "errors": [
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "create-booking-type",
+        "method": "POST",
+        "path": "/booking-types",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "POST",
+          "url": "=/booking-types",
+          "query": [],
+          "body": [
+            {
+              "name": "approval_required",
+              "source": "additionalFields"
+            },
+            {
+              "name": "booking_availability_interval_minutes",
+              "source": "additionalFields"
+            },
+            {
+              "name": "booking_threshold",
+              "source": "additionalFields"
+            },
+            {
+              "name": "booking_type_category_id",
+              "source": "additionalFields"
+            },
+            {
+              "name": "currency_code",
+              "source": "additionalFields"
+            },
+            {
+              "name": "description",
+              "source": "parameter"
+            },
+            {
+              "name": "display_seats_remaining",
+              "source": "additionalFields"
+            },
+            {
+              "name": "duration_minutes",
+              "source": "parameter"
+            },
+            {
+              "name": "latest_availability_days",
+              "source": "additionalFields"
+            },
+            {
+              "name": "max_bookings",
+              "source": "additionalFields"
+            },
+            {
+              "name": "max_guest_invites_per_booker",
+              "source": "additionalFields"
+            },
+            {
+              "name": "padding_minutes",
+              "source": "additionalFields"
+            },
+            {
+              "name": "payment_platform",
+              "source": "additionalFields"
+            },
+            {
+              "name": "price",
+              "source": "additionalFields"
+            },
+            {
+              "name": "private",
+              "source": "additionalFields"
+            },
+            {
+              "name": "redirect_url",
+              "source": "additionalFields"
+            },
+            {
+              "name": "title",
+              "source": "parameter"
+            },
+            {
+              "name": "url_slug",
+              "source": "parameter"
+            }
+          ],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "data",
+              "type": "object"
+            }
+          ],
+          "simplifiedFields": [
+            "data"
+          ]
+        },
+        "errors": [
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "list-booking-type-timeslots",
+      "method": "GET",
+      "path": "/booking-types/{bookingType}/timeslots",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [
+        {
+          "name": "bookingType",
+          "inputName": "bookingType",
+          "sample": 2,
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "starts_at",
+          "inputName": "starts_at",
+          "sample": "2026-01-01T00:00:00.000Z",
+          "location": "query",
+          "required": true,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "ends_at",
+          "inputName": "ends_at",
+          "sample": "2026-01-01T00:00:00.000Z",
+          "location": "query",
+          "required": true,
+          "arrayFormat": "indices"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": []
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "data",
+            "type": "array"
+          }
+        ],
+        "simplifiedFields": [
+          "data"
+        ]
+      },
+      "errors": [],
+      "requestPlan": {
+        "operationId": "list-booking-type-timeslots",
+        "method": "GET",
+        "path": "/booking-types/{bookingType}/timeslots",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "GET",
+          "url": "=/booking-types/{{$parameter[\"bookingType\"]}}/timeslots",
+          "query": [
+            {
+              "name": "starts_at",
+              "source": "parameter"
+            },
+            {
+              "name": "ends_at",
+              "source": "parameter"
+            }
+          ],
+          "body": [],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "data",
+              "type": "array"
+            }
+          ],
+          "simplifiedFields": [
+            "data"
+          ]
+        },
+        "errors": [],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "cancel-booking",
+      "method": "PATCH",
+      "path": "/bookings/{booking}/cancel",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [
+        {
+          "name": "booking",
+          "inputName": "booking",
+          "sample": 2,
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": [
+          {
+            "name": "reason",
+            "inputName": "reason",
+            "sample": "Client requested cancellation",
+            "example": "Client requested cancellation",
+            "type": "string",
+            "required": false
+          }
+        ]
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "booking_type_id",
+            "type": "integer"
+          },
+          {
+            "name": "cancelled_at",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "contact",
+            "type": "object"
+          },
+          {
+            "name": "contact_id",
+            "type": "integer"
+          },
+          {
+            "name": "created_at",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "ends_at",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "id",
+            "type": "integer"
+          },
+          {
+            "name": "meeting_id",
+            "type": "string"
+          },
+          {
+            "name": "meeting_url",
+            "type": "string"
+          },
+          {
+            "name": "payment",
+            "type": "object"
+          },
+          {
+            "name": "questions",
+            "type": "array"
+          },
+          {
+            "name": "starts_at",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "timezone",
+            "type": "string"
+          },
+          {
+            "name": "updated_at",
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "simplifiedFields": [
+          "id",
+          "created_at",
+          "updated_at",
+          "booking_type_id",
+          "cancelled_at",
+          "contact_id",
+          "ends_at",
+          "meeting_id",
+          "meeting_url",
+          "starts_at"
+        ]
+      },
+      "errors": [
+        {
+          "status": "400",
+          "title": "Bad Request - Booking is already cancelled"
+        },
+        {
+          "status": "403",
+          "title": "Forbidden - User does not have permission to cancel this booking"
+        },
+        {
+          "status": "404",
+          "title": "Not Found - Booking not found"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "cancel-booking",
+        "method": "PATCH",
+        "path": "/bookings/{booking}/cancel",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "PATCH",
+          "url": "=/bookings/{{$parameter[\"booking\"]}}/cancel",
+          "query": [],
+          "body": [
+            {
+              "name": "reason",
+              "source": "additionalFields"
+            }
+          ],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "booking_type_id",
+              "type": "integer"
+            },
+            {
+              "name": "cancelled_at",
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "name": "contact",
+              "type": "object"
+            },
+            {
+              "name": "contact_id",
+              "type": "integer"
+            },
+            {
+              "name": "created_at",
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "name": "ends_at",
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "name": "id",
+              "type": "integer"
+            },
+            {
+              "name": "meeting_id",
+              "type": "string"
+            },
+            {
+              "name": "meeting_url",
+              "type": "string"
+            },
+            {
+              "name": "payment",
+              "type": "object"
+            },
+            {
+              "name": "questions",
+              "type": "array"
+            },
+            {
+              "name": "starts_at",
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "name": "timezone",
+              "type": "string"
+            },
+            {
+              "name": "updated_at",
+              "type": "string",
+              "format": "date-time"
+            }
+          ],
+          "simplifiedFields": [
+            "id",
+            "created_at",
+            "updated_at",
+            "booking_type_id",
+            "cancelled_at",
+            "contact_id",
+            "ends_at",
+            "meeting_id",
+            "meeting_url",
+            "starts_at"
+          ]
+        },
+        "errors": [
+          {
+            "status": "400",
+            "title": "Bad Request - Booking is already cancelled"
+          },
+          {
+            "status": "403",
+            "title": "Forbidden - User does not have permission to cancel this booking"
+          },
+          {
+            "status": "404",
+            "title": "Not Found - Booking not found"
+          }
+        ],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "create-contact",
+      "method": "POST",
+      "path": "/contacts",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": [
+          {
+            "name": "email",
+            "inputName": "email",
+            "sample": "john@example.com",
+            "example": "john@example.com",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "inputName": "name",
+            "sample": "John Doe",
+            "example": "John Doe",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "timezone",
+            "inputName": "timezone",
+            "sample": "America/Los_Angeles",
+            "example": "America/Los_Angeles",
+            "type": "string",
+            "required": false
+          }
+        ]
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "data",
+            "type": "object"
+          }
+        ],
+        "simplifiedFields": [
+          "data"
+        ]
+      },
+      "errors": [
+        {
+          "status": "402",
+          "title": "Payment Required - Lifetime subscription required"
+        },
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "create-contact",
+        "method": "POST",
+        "path": "/contacts",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "POST",
+          "url": "=/contacts",
+          "query": [],
+          "body": [
+            {
+              "name": "email",
+              "source": "parameter"
+            },
+            {
+              "name": "name",
+              "source": "parameter"
+            },
+            {
+              "name": "timezone",
+              "source": "additionalFields"
+            }
+          ],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "data",
+              "type": "object"
+            }
+          ],
+          "simplifiedFields": [
+            "data"
+          ]
+        },
+        "errors": [
+          {
+            "status": "402",
+            "title": "Payment Required - Lifetime subscription required"
+          },
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "add-team-user",
+      "method": "POST",
+      "path": "/teams/{team}/users",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [
+        {
+          "name": "team",
+          "inputName": "team",
+          "sample": 2,
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": [
+          {
+            "name": "email",
+            "inputName": "email",
+            "sample": "user@example.com",
+            "example": "user@example.com",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "role_name",
+            "inputName": "role_name",
+            "sample": "user",
+            "example": "user",
+            "enum": [
+              "admin",
+              "user"
+            ],
+            "type": "string",
+            "required": false
+          }
+        ]
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "name": "team_user_id",
+            "type": "integer"
+          }
+        ],
+        "simplifiedFields": [
+          "message",
+          "team_user_id"
+        ]
+      },
+      "errors": [
+        {
+          "status": "403",
+          "title": "Forbidden - User does not have permission to add users to this team"
+        },
+        {
+          "status": "404",
+          "title": "Not Found - Team not found"
+        },
+        {
+          "status": "422",
+          "title": "Validation Error - User already invited or already a member"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "add-team-user",
+        "method": "POST",
+        "path": "/teams/{team}/users",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "POST",
+          "url": "=/teams/{{$parameter[\"team\"]}}/users",
+          "query": [],
+          "body": [
+            {
+              "name": "email",
+              "source": "parameter"
+            },
+            {
+              "name": "role_name",
+              "source": "additionalFields"
+            }
+          ],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "team_user_id",
+              "type": "integer"
+            }
+          ],
+          "simplifiedFields": [
+            "message",
+            "team_user_id"
+          ]
+        },
+        "errors": [
+          {
+            "status": "403",
+            "title": "Forbidden - User does not have permission to add users to this team"
+          },
+          {
+            "status": "404",
+            "title": "Not Found - Team not found"
+          },
+          {
+            "status": "422",
+            "title": "Validation Error - User already invited or already a member"
+          }
+        ],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "create-team-booking-type",
+      "method": "POST",
+      "path": "/teams/{team}/booking-types",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [
+        {
+          "name": "team",
+          "inputName": "team",
+          "sample": 2,
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": [
+          {
+            "name": "approval_required",
+            "inputName": "approval_required",
+            "sample": false,
+            "example": false,
+            "type": "boolean",
+            "required": false
+          },
+          {
+            "name": "booking_availability_interval_minutes",
+            "inputName": "booking_availability_interval_minutes",
+            "sample": 30,
+            "default": 15,
+            "example": 30,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "booking_threshold",
+            "inputName": "booking_threshold",
+            "sample": 120,
+            "example": 120,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "booking_type_category_id",
+            "inputName": "booking_type_category_id",
+            "sample": 1,
+            "example": 1,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "currency_code",
+            "inputName": "currency_code",
+            "sample": "USD",
+            "example": "USD",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "description",
+            "inputName": "description",
+            "sample": "Book a 30 minute meeting with me",
+            "example": "Book a 30 minute meeting with me",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "display_seats_remaining",
+            "inputName": "display_seats_remaining",
+            "sample": false,
+            "default": false,
+            "example": false,
+            "type": "boolean",
+            "required": false
+          },
+          {
+            "name": "duration_minutes",
+            "inputName": "duration_minutes",
+            "sample": 30,
+            "example": 30,
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "latest_availability_days",
+            "inputName": "latest_availability_days",
+            "sample": 90,
+            "default": 60,
+            "example": 90,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "max_bookings",
+            "inputName": "max_bookings",
+            "sample": 1,
+            "default": 1,
+            "example": 1,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "max_guest_invites_per_booker",
+            "inputName": "max_guest_invites_per_booker",
+            "sample": 0,
+            "default": 0,
+            "example": 0,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "padding_minutes",
+            "inputName": "padding_minutes",
+            "sample": 15,
+            "default": 0,
+            "example": 15,
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "payment_platform",
+            "inputName": "payment_platform",
+            "sample": "stripe",
+            "example": "stripe",
+            "enum": [
+              "stripe",
+              "paypal",
+              "tidycal"
+            ],
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "price",
+            "inputName": "price",
+            "sample": 25,
+            "default": 0,
+            "example": 25,
+            "type": "number",
+            "required": false
+          },
+          {
+            "name": "private",
+            "inputName": "private",
+            "sample": false,
+            "default": false,
+            "example": false,
+            "type": "boolean",
+            "required": false
+          },
+          {
+            "name": "redirect_url",
+            "inputName": "redirect_url",
+            "sample": "https://example.com/thank-you",
+            "example": "https://example.com/thank-you",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "title",
+            "inputName": "title",
+            "sample": "30 Minute Meeting",
+            "example": "30 Minute Meeting",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "url_slug",
+            "inputName": "url_slug",
+            "sample": "30-minute-meeting",
+            "example": "30-minute-meeting",
+            "type": "string",
+            "required": true
+          }
+        ]
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "data",
+            "type": "object"
+          }
+        ],
+        "simplifiedFields": [
+          "data"
+        ]
+      },
+      "errors": [
+        {
+          "status": "403",
+          "title": "Forbidden - User does not have permission to create booking types for this team"
+        },
+        {
+          "status": "404",
+          "title": "Not Found - Team not found"
+        },
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "create-team-booking-type",
+        "method": "POST",
+        "path": "/teams/{team}/booking-types",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "POST",
+          "url": "=/teams/{{$parameter[\"team\"]}}/booking-types",
+          "query": [],
+          "body": [
+            {
+              "name": "approval_required",
+              "source": "additionalFields"
+            },
+            {
+              "name": "booking_availability_interval_minutes",
+              "source": "additionalFields"
+            },
+            {
+              "name": "booking_threshold",
+              "source": "additionalFields"
+            },
+            {
+              "name": "booking_type_category_id",
+              "source": "additionalFields"
+            },
+            {
+              "name": "currency_code",
+              "source": "additionalFields"
+            },
+            {
+              "name": "description",
+              "source": "parameter"
+            },
+            {
+              "name": "display_seats_remaining",
+              "source": "additionalFields"
+            },
+            {
+              "name": "duration_minutes",
+              "source": "parameter"
+            },
+            {
+              "name": "latest_availability_days",
+              "source": "additionalFields"
+            },
+            {
+              "name": "max_bookings",
+              "source": "additionalFields"
+            },
+            {
+              "name": "max_guest_invites_per_booker",
+              "source": "additionalFields"
+            },
+            {
+              "name": "padding_minutes",
+              "source": "additionalFields"
+            },
+            {
+              "name": "payment_platform",
+              "source": "additionalFields"
+            },
+            {
+              "name": "price",
+              "source": "additionalFields"
+            },
+            {
+              "name": "private",
+              "source": "additionalFields"
+            },
+            {
+              "name": "redirect_url",
+              "source": "additionalFields"
+            },
+            {
+              "name": "title",
+              "source": "parameter"
+            },
+            {
+              "name": "url_slug",
+              "source": "parameter"
+            }
+          ],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "data",
+              "type": "object"
+            }
+          ],
+          "simplifiedFields": [
+            "data"
+          ]
+        },
+        "errors": [
+          {
+            "status": "403",
+            "title": "Forbidden - User does not have permission to create booking types for this team"
+          },
+          {
+            "status": "404",
+            "title": "Not Found - Team not found"
+          },
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "remove-team-user",
+      "method": "DELETE",
+      "path": "/teams/{team}/users/{teamUser}",
+      "serverId": "documentServer1BaseurlTidycalComApi",
+      "authentication": [],
+      "parameters": [
+        {
+          "name": "team",
+          "inputName": "team",
+          "sample": 2,
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        },
+        {
+          "name": "teamUser",
+          "inputName": "teamUser",
+          "sample": 2,
+          "location": "path",
+          "required": true,
+          "arrayFormat": "indices"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": []
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ],
+        "simplifiedFields": [
+          "message"
+        ]
+      },
+      "errors": [
+        {
+          "status": "403",
+          "title": "Forbidden - User does not have permission to remove users from this team"
+        },
+        {
+          "status": "404",
+          "title": "Not Found - Team or team user not found"
+        },
+        {
+          "status": "422",
+          "title": "Validation Error - User not found in team"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "remove-team-user",
+        "method": "DELETE",
+        "path": "/teams/{team}/users/{teamUser}",
+        "serverId": "documentServer1BaseurlTidycalComApi",
+        "request": {
+          "method": "DELETE",
+          "url": "=/teams/{{$parameter[\"team\"]}}/users/{{$parameter[\"teamUser\"]}}",
+          "query": [],
+          "body": [],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ],
+          "simplifiedFields": [
+            "message"
+          ]
+        },
+        "errors": [
+          {
+            "status": "403",
+            "title": "Forbidden - User does not have permission to remove users from this team"
+          },
+          {
+            "status": "404",
+            "title": "Not Found - Team or team user not found"
+          },
+          {
+            "status": "422",
+            "title": "Validation Error - User not found in team"
+          }
+        ],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    }
+  ],
+  "triggerFixtures": [
+    {
+      "operationId": "list-booking-types",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "list-booking-types",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    },
+    {
+      "operationId": "get-booking",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "get-booking",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    },
+    {
+      "operationId": "list-bookings",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "list-bookings",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    },
+    {
+      "operationId": "list-contacts",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "list-contacts",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    },
+    {
+      "operationId": "get-team",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "get-team",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    },
+    {
+      "operationId": "list-team-booking-types",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "list-team-booking-types",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    },
+    {
+      "operationId": "list-team-bookings",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "list-team-bookings",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    },
+    {
+      "operationId": "list-team-users",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "list-team-users",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    },
+    {
+      "operationId": "list-teams",
+      "trigger": {
+        "type": "polling",
+        "sourceOperation": "list-teams",
+        "cursorParameter": "updated_at",
+        "defaultPollInterval": "5m"
+      },
+      "assertions": [
+        "polling trigger cursor, advancement, first-poll, empty-result, restart, deduplication, deduplication-retention, state-scope, and item-linking behavior follow the declared Trigger Contract"
+      ]
+    }
+  ]
+}
